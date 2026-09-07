@@ -1,7 +1,7 @@
 # NCCR Genomics Pipeline - Development Environment
 # Refactored version targeting Python 3.12 and Snakemake 9
 #
-# Usage:
+# Usage (conda):
 #   conda env create -f environment.yaml
 #   conda activate nccrpipe
 #   pip install -e .
@@ -10,6 +10,13 @@
 # recreating it:
 #   conda install -n nccrPipe -c conda-forge -c bioconda \
 #       snakemake-executor-plugin-cluster-generic
+#
+# Usage (pixi):
+#   pixi init --import environment.yaml
+#   pixi install
+#   pixi run pip install -e .  
+#   pixi shell # activate the environment in the current shell
+
 
 name: nccrpipe
 channels:
@@ -39,5 +46,5 @@ dependencies:
   - pip
 
   # Install package in development mode via pip
-  - pip:
-    - -e .
+  # - pip:
+  #  - -e .

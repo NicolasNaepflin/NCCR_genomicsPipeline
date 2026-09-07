@@ -422,3 +422,6 @@ buildNumber.properties
 
 # added by Anna for general purposes :)
 /test_data/
+# pixi environments
+.pixi/*
+!.pixi/config.toml
