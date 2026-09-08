@@ -39,7 +39,7 @@ if db == 'eggnog':
             qerrfile = lambda wildcards: OUTDIR/f'logs/{wildcards.assembly}/{wildcards.sample}/eggnog/{wildcards.sample}.emapper.qerr',
             qoutfile = lambda wildcards: OUTDIR/f'logs/{wildcards.assembly}/{wildcards.sample}/eggnog/{wildcards.sample}.emapper.qout'
         conda:
-            'emapper'
+            '../envs/emapper.yaml'
         log:
             log = OUTDIR/'logs/{assembly}/{sample}/eggnog/{sample}.emapper.log'
         threads:

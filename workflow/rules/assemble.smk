@@ -32,7 +32,7 @@ rule assemble_wga:
         log:
             log = OUTDIR/'logs/assembly/{sample}.spades.log',
         conda:
-            'assembly'
+            '../envs/assemble.yaml'
         threads:
             16
         shell:
@@ -64,7 +64,7 @@ rule unicycler_short:
     log:
         log = OUTDIR/'logs/unicycler/{sample}.unicycler.log',
     conda:
-        'assembly'
+        '../envs/assemble.yaml'
     threads:
         32
     shell:
@@ -85,7 +85,7 @@ rule prokka:
         qerrfile=lambda wildcards: str(OUTDIR / 'logs' / Path(f'{wildcards.assembly}').parent.stem) + '.prokka.qerr',
         qoutfile=lambda wildcards: str(OUTDIR / 'logs' / Path(f'{wildcards.assembly}').parent.stem) + '.prokka.qout'
     conda:
-        'assembly'
+        '../envs/assemble.yaml'
     log:
         log='{assembly}.prokka.log',
     threads:
@@ -123,7 +123,7 @@ if config.get("assembler", 'spades') == 'spades': # todo rethink cleanup
             workfolder = lambda wildcards: OUTDIR/f'{wildcards.assembly}',
             sample = '{sample}',
         conda:
-            'assembly'
+            '../envs/assemble.yaml'
         log:
             log = OUTDIR/'logs/{assembly}/{sample}.assembly_cleanup.stats.log'
         threads:

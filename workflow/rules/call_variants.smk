@@ -38,7 +38,7 @@ rule run_breseq:
         mem=7700,
         time=1400
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     log:
         log = OUTDIR /'logs/{sample}.breseq.log'
     threads:
@@ -60,7 +60,7 @@ rule index:
         mem = 7700,
         time=1400
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     threads:
         8
     shell: "bwa index {input}"
@@ -86,7 +86,7 @@ rule align_to_ref:
     log:
         log =  OUTDIR / 'logs' / '{sample}_{ref}.bam.log',
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     threads:
         8
     shell:
@@ -110,7 +110,7 @@ rule remove_duplicates:
         tmpdir = config.get('tmpdir', ''),
         metrics = lambda wildcards: OUTDIR/f'bams/{wildcards.sample}/{wildcards.sample}_{wildcards.ref}.picard.metrics'
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     log:
         log = OUTDIR/'logs/{sample}_{ref}.removeDuplicates.log'
     threads:
@@ -139,7 +139,7 @@ rule bcf_call:
     log:
         log = OUTDIR/'logs/VCF/{sample}_{ref}.mpileup.log'
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     threads:
         32
     shell:
@@ -157,7 +157,7 @@ rule bcf_filter_isolate:
         mem=7700,
         time=1400
     conda:
-        'call_variants'
+        '../envs/call_variants.yaml'
     log:
         log = OUTDIR / 'logs/VCF/{sample}_{ref}.isolate.bcf.log'
     threads:

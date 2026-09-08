@@ -80,7 +80,7 @@ if not sampleInfo.empty:
         if not config.get('se', ''):
             if config.get('qc', '') == 'host':
                 rule qc:
-                    conda: "preprocessing"
+                    conda: "../envs/qc.yaml"
                     input:
                         fq1 = getFastq1,
                         fq2 = getFastq2,
@@ -156,7 +156,7 @@ if not sampleInfo.empty:
                         mem = 8000,
                         time = 235
                     conda:
-                        "preprocessing"
+                        "../envs/qc.yaml"
                     benchmark:
                         OUTDIR /'clean_reads/{sample}/{sample}.qc.benchmark'
                     log:
@@ -212,7 +212,7 @@ if not sampleInfo.empty:
                     mem=8000,
                     time=235
                 conda:
-                    "preprocessing"
+                    "../envs/qc.yaml"
                 log:
                     log=OUTDIR / 'logs/{sample}.qc.log'
                 threads:
@@ -251,7 +251,7 @@ if not sampleInfo.empty:
                 mem = 8000,
                 time = 235
             conda:
-                "preprocessing"
+                "../envs/qc.yaml"
             benchmark:
                 OUTDIR /'clean_reads/{sample}/{sample}.qc.benchmark'
             log:
@@ -277,7 +277,7 @@ if not sampleInfo.empty:
                 mem = 8000,
                 time = 235
             conda:
-                "preprocessing"
+                "../envs/qc.yaml"
             log:
                 log = OUTDIR /'logs/qc/{sample}.fastqc_clean.log'
             threads:
@@ -300,7 +300,7 @@ if not sampleInfo.empty:
                 mem = 8000,
                 time = 235
             conda:
-                "preprocessing"
+                "../envs/qc.yaml"
             log:
                 log = OUTDIR /'logs/qc/{sample}.fastqc.log'
             threads:

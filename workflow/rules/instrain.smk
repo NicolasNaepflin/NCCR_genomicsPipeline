@@ -68,7 +68,7 @@ rule run_instrain_profile:
         mem = 7700,
         time = 1400
     conda:
-        'instrain'
+        "../envs/instrain.yaml"
     log:
         log = OUTDIR / 'logs/instrain/{sample}_to_{ref}.profile.log'
     threads:
@@ -96,7 +96,7 @@ rule run_instrain_compare:
         mem = 7700,
         time = 1400
     conda:
-        'instrain'
+        "../envs/instrain.yaml"
     log:
         log = OUTDIR / 'logs/instrain/{ref}.compare.log'
     threads:

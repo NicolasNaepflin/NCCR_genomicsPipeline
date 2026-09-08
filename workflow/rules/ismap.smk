@@ -106,7 +106,7 @@ rule run_ismap:
         mem = 7700,
         time = 1400
     conda:
-        'ismap'
+        '../envs/ismap.yaml'
     log:
         log = OUTDIR / 'logs/ismap/{sample}.ismap.log'
     threads:
