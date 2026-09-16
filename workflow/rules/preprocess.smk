@@ -20,7 +20,7 @@ import sys
 
 if len(SAMPLES) == 0:
     ValueError("Provide samples via 'samples'")
-if not sampleInfo.empty:
+if sampleInfo is not None and not sampleInfo.empty:
 
     samples_to_merge = (sampleInfo.loc[sampleInfo.groupby('sample')
                         .unit.filter(lambda x: x.nunique() > 1).index]['sample']

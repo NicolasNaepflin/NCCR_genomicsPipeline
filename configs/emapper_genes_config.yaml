@@ -1,0 +1,9 @@
+# Paths are absolute or relative to workflow/, not this config file.
+outDir: /nfs/cds-ichi/exports/biol_micro_cds_gr_sunagawa/IMB_NCCR/vorholt/CESS26-3/data/eggnogv2.1.12
+database: eggnog
+eggnog_db: /nfs/cds-1/IMB-databases/EGGNOG/2.1.12
+
+# Existing amino-acid FASTAs; no samples CSV or reads required.
+preexisting_genes:
+  Leaf130: /nfs/cds-ichi/exports/biol_micro_cds_gr_sunagawa/IMB_NCCR/vorholt/CESS26-3/data/pgap_faa/Leaf130_renamed.faa
+  Leaf131: /nfs/cds-ichi/exports/biol_micro_cds_gr_sunagawa/IMB_NCCR/vorholt/CESS26-3/data/pgap_faa/Leaf131_renamed.faa

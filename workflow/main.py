@@ -209,7 +209,7 @@ def ismap(config, local, dry, no_conda, cores, partition):
 @click.option('--dry',  is_flag=True, help="Show commands without running them")
 @PARTITION_OPTION
 def annotate(config, local, dry, no_conda, partition):
-    click.echo("Running Assembly Pipeline")
+    click.echo("Running Annotation Pipeline")
     click.echo(f"Config file: {config}")
     click.echo("Running {}".format(
         'locally' if local else ('dry' if dry else 'on cluster')))
@@ -417,4 +417,3 @@ def check_cluster_executor():
 
 if __name__ == "__main__":
     main()
-

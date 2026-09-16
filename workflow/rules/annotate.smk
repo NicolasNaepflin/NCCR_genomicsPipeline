@@ -4,6 +4,48 @@
 #     input: [OUTDIR/f'assembly/{sample}/scaffolds.fasta.gz' for sample in SUBSAMPLES]
 #
 from pathlib import Path
+import re
+
+
+# Optional external protein FASTAs, independent of reads and assembly outputs.
+PREEXISTING_GENES = config.get('preexisting_genes', {})
+if 'preexisting_genes' in config:
+    if not isinstance(PREEXISTING_GENES, dict) or not PREEXISTING_GENES:
+        raise ValueError('preexisting_genes must be a non-empty mapping of sample names to protein FASTA paths')
+    if config.get('database', 'eggnog') != 'eggnog':
+        raise ValueError('preexisting_genes requires database: eggnog')
+    if not config.get('eggnog_db'):
+        raise ValueError('Set eggnog_db to the eggNOG-mapper database directory')
+    for name, fasta in PREEXISTING_GENES.items():
+        if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', name):
+            raise ValueError('preexisting_genes sample names must start with a letter or digit and contain only letters, digits, dots, underscores or hyphens')
+        if not isinstance(fasta, str) or not fasta.strip():
+            raise ValueError(f'preexisting_genes.{name} must be a protein FASTA path')
+
+    rule emapper_genes:
+        input:
+            faa = lambda wildcards: _resolve(PREEXISTING_GENES[wildcards.sample])
+        output:
+            annotations = OUTDIR/'eggnog/{sample}/{sample}.emapper.annotations'
+        params:
+            outdir = lambda wildcards: OUTDIR/f'eggnog/{wildcards.sample}',
+            dataDir = _resolve(config['eggnog_db']),
+            scratch = 1000,
+            mem = 4000,
+            time = 235,
+            qerrfile = lambda wildcards: OUTDIR/f'logs/eggnog/{wildcards.sample}.emapper.qerr',
+            qoutfile = lambda wildcards: OUTDIR/f'logs/eggnog/{wildcards.sample}.emapper.qout'
+        conda:
+            '../envs/emapper.yaml'
+        log:
+            OUTDIR/'logs/eggnog/{sample}.emapper.log'
+        threads: 16
+        shell:
+            'mkdir -p {params.outdir:q}; '
+            'emapper.py -i {input.faa:q} --output_dir {params.outdir:q} '
+            '--output {wildcards.sample:q} --cpu {threads} '
+            '--temp_dir {params.outdir:q} -m diamond '
+            '--data_dir {params.dataDir:q} --override > {log:q} 2>&1'
 
 #
 # rule gunzipAnn:
@@ -218,4 +260,3 @@ rule gapseq_find:
 #         echo "$command" > {log.command};
 #         eval "$command"
 #         '''
-

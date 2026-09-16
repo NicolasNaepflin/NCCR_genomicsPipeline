@@ -427,6 +427,31 @@ Then run:
 nccrPipe annotate -c configs/assembly_config.yaml --local
 ```
 
+To annotate **preexisting protein sequences**, copy
+`configs/emapper_genes_config.yaml` and set the database and FASTA paths:
+
+```yaml
+outDir: /path/to/output
+database: eggnog
+eggnog_db: /path/to/eggnog-data
+preexisting_genes:
+  genome_a: /path/to/genome_a.faa
+  genome_b: /path/to/genome_b.faa
+```
+
+```bash
+nccrPipe annotate -c configs/emapper_genes_config.yaml --dry
+nccrPipe annotate -c configs/emapper_genes_config.yaml --local
+```
+
+Omit `--local` to submit to SLURM. With `preexisting_genes` configured,
+annotation uses those amino-acid FASTAs directly; no samples CSV, reads,
+assembly or gene prediction is required. Nucleotide genes must first be
+translated to proteins. Relative paths are resolved against `workflow/`.
+Results are written to `outDir/eggnog/{sample}/{sample}.emapper.annotations`,
+with logs in `outDir/logs/eggnog/`. Without `preexisting_genes`, annotation
+continues to use the assembly outputs.
+
 ### 5. Outputs
 
 ```

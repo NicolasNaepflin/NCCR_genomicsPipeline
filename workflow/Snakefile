@@ -171,8 +171,11 @@ rule ismap:
 Annotation
 
 """
-db = config.get('database', '')
-if assembler_config == 'spades':
+db = config.get('database', 'eggnog')
+if PREEXISTING_GENES:
+    FAAs = [OUTDIR/f'eggnog/{sample}/{sample}.emapper.annotations'
+            for sample in PREEXISTING_GENES]
+elif assembler_config == 'spades':
     FAAs = [
         f'{OUTDIR}/assembly/{sample}/{db}/{sample}.{db}.done' for sample in SAMPLES]
 elif assembler_config == 'unicycler':
